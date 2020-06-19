@@ -3,7 +3,9 @@ package br.com.guilhermealvessilve.infrastructure.student.repository;
 import br.com.guilhermealvessilve.domain.student.entity.Student;
 import br.com.guilhermealvessilve.domain.student.repository.StudentRepository;
 import br.com.guilhermealvessilve.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.infrastructure.util.async.CompletableFutureUtils;
 import br.com.guilhermealvessilve.infrastructure.util.db.TransactionContainer;
+import br.com.guilhermealvessilve.infrastructure.util.db.TransactionManager;
 import io.vertx.mutiny.sqlclient.Pool;
 import io.vertx.mutiny.sqlclient.Tuple;
 import org.jboss.logging.Logger;
@@ -17,8 +19,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
+import static br.com.guilhermealvessilve.infrastructure.util.async.CompletableFutureUtils.successCompletedStage;
+
 @ApplicationScoped
-public class StudentReactiveRepository implements StudentRepository {
+public class StudentReactiveRepository implements StudentRepository, TransactionManager {
 
     private static final Logger LOGGER = Logger.getLogger(StudentReactiveRepository.class);
 
@@ -43,13 +47,14 @@ public class StudentReactiveRepository implements StudentRepository {
     }
 
     @Override
-    public CompletionStage<Optional<Student>> findByCPF(final String cpf) {
+    public CompletionStage<Optional<Student>> findByCPF(final CPF cpf) {
 
+        Objects.requireNonNull(cpf, "cpf cannot be null");
         return pool.preparedQuery("SELECT s.*, p.* FROM students s " +
                 "LEFT JOIN phones p " +
                 "ON s.cpf = p.student_cpf " +
                 "WHERE cpf = ?;")
-                .execute(Tuple.of(new CPF(cpf).getDocument()))
+                .execute(Tuple.of(cpf))
                 .subscribeAsCompletionStage()
                 .thenApply(converter::getOptionalStudent);
     }
@@ -57,6 +62,7 @@ public class StudentReactiveRepository implements StudentRepository {
     @Override
     public CompletionStage<Boolean> save(final Student student) {
 
+        Objects.requireNonNull(student, "student cannot be null");
         final var transactionContainer = new TransactionContainer();
 
         return pool.begin()
@@ -78,11 +84,9 @@ public class StudentReactiveRepository implements StudentRepository {
                 .subscribeAsCompletionStage()
         ).thenCompose(rowSet -> {
 
-            if (rowSet.rowCount() == 0) {
+            if (converter.failedOperation(rowSet)) {
                 LOGGER.error("Rolling back");
-                return transactionContainer.get()
-                        .rollback()
-                        .subscribeAsCompletionStage();
+                return rollback(transactionContainer);
             }
 
             return CompletableFuture.allOf(student.getPhones()
@@ -101,9 +105,7 @@ public class StudentReactiveRepository implements StudentRepository {
             .map(CompletionStage::toCompletableFuture)
             .toArray(CompletableFuture[]::new));
         })
-        .thenCompose(ignore -> transactionContainer.get()
-                .commit()
-                .subscribeAsCompletionStage()
+        .thenCompose(ignore -> commit(transactionContainer)
                 .thenApply(aVoid -> {
                     LOGGER.debug("Committed transaction");
                     return null;
@@ -112,18 +114,54 @@ public class StudentReactiveRepository implements StudentRepository {
         .handle((ignore, throwable) -> {
             if (throwable != null) {
                 LOGGER.error("Error commit: " + throwable.getMessage());
-                final var rollback = transactionContainer.get()
-                        .rollback()
-                        .subscribeAsCompletionStage()
-                        .toCompletableFuture();
-
-                return rollback.isCompletedExceptionally()
-                        ? CompletableFuture.<Boolean>failedStage(throwable)
-                        : rollback.thenApply(aVoid -> false);
+                return rollbackFinally(throwable, transactionContainer);
             }
 
-            return CompletableFuture.completedStage(true);
+            return successCompletedStage();
         })
         .thenCompose(Function.identity());
+    }
+
+    @Override
+    public CompletionStage<Boolean> delete(Student student) {
+
+        Objects.requireNonNull(student, "student cannot be null");
+        final var transactionContainer = new TransactionContainer();
+
+        return pool.begin()
+                .subscribeAsCompletionStage()
+                .thenApply(transactionContainer::config)
+                .thenCompose(transaction -> transaction.get()
+                        .preparedQuery("DELETE FROM phones WHERE student_cpf = ?;")
+                        .execute(Tuple.of(student.getCpf()))
+                        .subscribeAsCompletionStage()
+                ).thenCompose(rowSet -> {
+
+                    if (converter.failedOperation(rowSet)) {
+                        LOGGER.error("Rolling back...");
+                        return rollbackResult(transactionContainer);
+                    }
+
+                    return transactionContainer.get()
+                                    .preparedQuery("DELETE FROM students WHERE cpf = ?;")
+                                    .execute(Tuple.of(student.getCpf()))
+                                    .subscribeAsCompletionStage()
+                                    .thenApply(converter::isSuccessOperation);
+                })
+                .thenCompose(result -> commit(transactionContainer)
+                        .thenApply(aVoid -> {
+                            LOGGER.debug("Committed transaction");
+                            return result;
+                        })
+                )
+                .handle((ignore, throwable) -> {
+                    if (throwable != null) {
+                        LOGGER.error("Error commit: " + throwable.getMessage());
+                        return rollbackFinally(throwable, transactionContainer);
+                    }
+
+                    return successCompletedStage();
+                })
+                .thenCompose(Function.identity());
     }
 }

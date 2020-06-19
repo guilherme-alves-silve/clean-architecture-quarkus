@@ -17,13 +17,13 @@ import javax.inject.Inject;
  * https://quarkus.io/guides/cdi-reference
  */
 @ApplicationScoped
-public class IndicationReactiveRepositoryCreator {
+public class IndicationReactiveRepositoryFactory {
 
     private final MySQLTestcontainer mySQLTestcontainer;
     private final IndicationDbConverter converter;
 
     @Inject
-    IndicationReactiveRepositoryCreator(final MySQLTestcontainer mySQLTestcontainer, final IndicationDbConverter converter) {
+    IndicationReactiveRepositoryFactory(final MySQLTestcontainer mySQLTestcontainer, final IndicationDbConverter converter) {
         this.mySQLTestcontainer = mySQLTestcontainer;
         this.converter = converter;
     }

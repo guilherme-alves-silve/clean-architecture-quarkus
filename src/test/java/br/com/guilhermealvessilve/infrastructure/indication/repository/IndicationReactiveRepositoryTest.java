@@ -1,56 +1,69 @@
 package br.com.guilhermealvessilve.infrastructure.indication.repository;
 
-import br.com.guilhermealvessilve.domain.indication.entity.Indication;
-import br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture;
-import br.com.guilhermealvessilve.infrastructure.testcontainer.config.repository.IndicationReactiveRepositoryCreator;
+import br.com.guilhermealvessilve.infrastructure.student.repository.StudentReactiveRepository;
 import br.com.guilhermealvessilve.infrastructure.testcontainer.MySQLTestcontainer;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication;
+import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication2;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.deleteIndications;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.deleteStudents;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.saveIndications;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.saveStudents;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @QuarkusTestResource(MySQLTestcontainer.class)
 class IndicationReactiveRepositoryTest {
 
-    private final IndicationReactiveRepositoryCreator creator;
+    private final IndicationReactiveRepository repository;
+    private final StudentReactiveRepository studentRepository;
 
     @Inject
-    IndicationReactiveRepositoryTest(final IndicationReactiveRepositoryCreator creator) {
-        this.creator = creator;
+    IndicationReactiveRepositoryTest(
+            final IndicationReactiveRepository repository,
+            final StudentReactiveRepository studentRepository
+    ) {
+        this.repository = repository;
+        this.studentRepository = studentRepository;
+    }
+
+    @BeforeEach
+    public void setUpEach() {
+        saveStudents(studentRepository, createStudent(), createStudent2());
+        saveIndications(repository, createIndication(), createIndication2());
+    }
+
+    @AfterEach
+    public void tearDownEach() {
+        deleteIndications(repository, createIndication(), createIndication2());
+        deleteStudents(studentRepository, createStudent(), createStudent2());
     }
 
     @Test
     void shouldGetAllIndications() {
 
-        saveIndication(IndicationFixture.createIndication());
-
-        final var repository = creator.createRepository();
-
-        saveIndication(IndicationFixture.createIndication2());
-
-        final var Indications = repository.getAll()
+        final var indications = repository.getAll()
                 .toCompletableFuture()
                 .join();
 
-        assertEquals(2, Indications.size());
+        assertEquals(2, indications.size());
     }
 
     @Test
     void shouldFindByCPF() {
 
-        final var repository = creator.createRepository();
+        final var indication = createIndication();
 
-        final var indication = IndicationFixture.createIndication();
-
-        saveIndication(indication);
-
-        final var optSavedIndication = repository.findByIndicatorCPF(indication.getIndicator().getCpf().getDocument())
+        final var optSavedIndication = repository.findByIndicatorCPF(indication.getIndicatorCpf())
                 .toCompletableFuture()
                 .join();
 
@@ -66,16 +79,23 @@ class IndicationReactiveRepositoryTest {
     @Test
     void shouldSaveWithSuccess() {
 
-        final var result = saveIndication(IndicationFixture.createIndication());
+        final var result = saveIndications(repository, createIndication());
         assertTrue(result);
     }
 
-    private boolean saveIndication(final Indication indication) {
+    @Test
+    void shouldDeleteWithSuccess() {
 
-        final var repository = creator.createRepository();
-
-        return repository.save(indication)
+        final var indication = createIndication();
+        final var result = repository.delete(indication)
                 .toCompletableFuture()
                 .join();
+        assertTrue(result);
+
+        final var optSavedStudent = repository.findByIndicatorCPF(indication.getIndicatorCpf())
+                .toCompletableFuture()
+                .join();
+
+        assertFalse(optSavedStudent.isPresent());
     }
 }

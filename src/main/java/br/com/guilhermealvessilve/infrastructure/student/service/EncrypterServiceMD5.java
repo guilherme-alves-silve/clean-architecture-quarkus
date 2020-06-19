@@ -6,16 +6,15 @@ import org.eclipse.microprofile.context.ManagedExecutor;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 @ApplicationScoped
-public class EncrypterServiceMD5Impl implements EncrypterService {
+public class EncrypterServiceMD5 implements EncrypterService {
 
     private final ManagedExecutor managedExecutor;
 
     @Inject
-    public EncrypterServiceMD5Impl(ManagedExecutor managedExecutor) {
+    public EncrypterServiceMD5(ManagedExecutor managedExecutor) {
         this.managedExecutor = managedExecutor;
     }
 

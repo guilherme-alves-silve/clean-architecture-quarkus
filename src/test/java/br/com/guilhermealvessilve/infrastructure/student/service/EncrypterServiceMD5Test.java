@@ -1,6 +1,5 @@
 package br.com.guilhermealvessilve.infrastructure.student.service;
 
-import br.com.guilhermealvessilve.domain.student.service.EncrypterService;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-class EncrypterServiceMD5ImplTest {
+class EncrypterServiceMD5Test {
 
-    private final EncrypterService encrypterService;
+    private final EncrypterServiceMD5 encrypterService;
 
     @Inject
-    EncrypterServiceMD5ImplTest(EncrypterService encrypterService) {
+    EncrypterServiceMD5Test(EncrypterServiceMD5 encrypterService) {
         this.encrypterService = encrypterService;
     }
 

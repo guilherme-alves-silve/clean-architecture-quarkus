@@ -1,17 +1,20 @@
 package br.com.guilhermealvessilve.infrastructure.student.repository;
 
-import br.com.guilhermealvessilve.domain.student.entity.Student;
-import br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture;
 import br.com.guilhermealvessilve.infrastructure.testcontainer.MySQLTestcontainer;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication;
+import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication2;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @QuarkusTestResource(MySQLTestcontainer.class)
@@ -24,12 +27,18 @@ class StudentReactiveRepositoryTest {
         this.repository = repository;
     }
 
+    @BeforeEach
+    public void setUpEach() {
+        saveStudents(repository, createStudent(), createStudent2());
+    }
+
+    @AfterEach
+    public void tearDownEach() {
+        deleteStudents(repository, createStudent(), createStudent2());
+    }
+
     @Test
     void shouldGetAllStudents() {
-
-        saveStudent(StudentFixture.createStudent());
-
-        saveStudent(StudentFixture.createStudent2());
 
         final var students = repository.getAll()
                 .toCompletableFuture()
@@ -41,11 +50,8 @@ class StudentReactiveRepositoryTest {
     @Test
     void shouldFindByCPF() {
 
-        final var student = StudentFixture.createStudent2();
-
-        saveStudent(student);
-
-        final var optSavedStudent = repository.findByCPF(student.getCpf().getDocument())
+        final var student = createStudent2();
+        final var optSavedStudent = repository.findByCPF(student.getCpf())
                 .toCompletableFuture()
                 .join();
 
@@ -64,14 +70,23 @@ class StudentReactiveRepositoryTest {
     @Test
     void shouldSaveWithSuccess() {
 
-        final var result = saveStudent(StudentFixture.createStudent());
+        final var result = saveStudents(repository, createStudent());
         assertTrue(result);
     }
 
-    private boolean saveStudent(final Student student) {
+    @Test
+    void shouldDeleteWithSuccess() {
 
-        return repository.save(student)
+        final var student = createStudent();
+        final var result = repository.delete(student)
+                    .toCompletableFuture()
+                    .join();
+        assertTrue(result);
+
+        final var optSavedStudent = repository.findByCPF(student.getCpf())
                 .toCompletableFuture()
                 .join();
+
+        assertFalse(optSavedStudent.isPresent());
     }
 }

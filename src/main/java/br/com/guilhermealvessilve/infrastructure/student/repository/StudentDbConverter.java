@@ -3,6 +3,7 @@ package br.com.guilhermealvessilve.infrastructure.student.repository;
 import br.com.guilhermealvessilve.domain.student.entity.Student;
 import br.com.guilhermealvessilve.domain.student.vo.Phone;
 import br.com.guilhermealvessilve.infrastructure.util.db.CollectionUtils;
+import br.com.guilhermealvessilve.infrastructure.util.db.DbConverter;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.RowSet;
 
@@ -15,7 +16,7 @@ import java.util.stream.StreamSupport;
 import static java.util.stream.Collectors.toList;
 
 @ApplicationScoped
-public class StudentDbConverter {
+public class StudentDbConverter implements DbConverter {
 
     List<Student> getStudents(RowSet<Row> rows) {
 
@@ -54,5 +55,4 @@ public class StudentDbConverter {
                 row.getString("number")
         );
     }
-
 }
