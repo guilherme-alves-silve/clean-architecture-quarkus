@@ -1,5 +1,8 @@
 # clean-architecture-quarkus project
 
+Project based on the course [Avançando no PHP: Introdução à Clean Architecture](https://cursos.alura.com.br/course/php-introducao-clean-achitecture) 
+but using Java with Quarkus
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
