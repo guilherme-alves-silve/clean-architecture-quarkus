@@ -9,11 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication;
-import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication2;
 import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
 import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
-import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.*;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.deleteStudents;
+import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.saveStudents;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest

@@ -8,7 +8,11 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
-import static org.junit.jupiter.api.Assertions.*;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class StudentTest {
 
@@ -17,6 +21,7 @@ class StudentTest {
 
         final var student = createStudent();
         assertAll(
+                () -> assertNotEquals(student, createStudent2(), "student equals and hashCode different"),
                 () -> assertEquals(student, createStudent(), "student equals and hashCode"),
                 () -> assertEquals(student.getCpf(), new CPF("11111111111"), "student.cpf"),
                 () -> assertEquals(student.getName(), "Joao Pedro", "student.name"),

@@ -1,14 +1,17 @@
 package br.com.guilhermealvessilve.infrastructure.testcontainer;
 
+import io.quarkus.arc.AlternativePriority;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.mysqlclient.MySQLPool;
+import io.vertx.mutiny.sqlclient.Pool;
 import io.vertx.mysqlclient.MySQLConnectOptions;
 import io.vertx.sqlclient.PoolOptions;
 import org.jboss.logging.Logger;
 import org.testcontainers.containers.MySQLContainer;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Map;
@@ -38,7 +41,9 @@ public class MySQLTestcontainer implements QuarkusTestResourceLifecycleManager {
         return Collections.emptyMap();
     }
 
-    public MySQLPool getTestcontainersPool() {
+    @Produces
+    @AlternativePriority(value = 1)
+    public Pool getTestcontainersPool() {
         final var connectionOptions = new MySQLConnectOptions()
                 .setHost(container.getHost())
                 .setPort(container.getFirstMappedPort())

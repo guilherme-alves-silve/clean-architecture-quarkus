@@ -63,7 +63,8 @@ public class IndicationReactiveRepository implements IndicationRepository {
 
     @Override
     public CompletionStage<Boolean> save(final Indication indication) {
-        return executeStatement("INSERT INTO indications(indicator_cpf, indicated_cpf) VALUES (?, ?);", indication);
+        return executeStatement("INSERT INTO indications(indicator_cpf, indicated_cpf) VALUES (?, ?) " +
+                "ON DUPLICATE KEY UPDATE indication_date = indication_date;", indication);
     }
 
     @Override

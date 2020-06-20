@@ -18,4 +18,9 @@ public class StudentFixture {
                 .addPhone("33", "44444444")
                 .addPhone("11", "555555555");
     }
+
+    public static Student createStudent3() {
+        return Student.withCPFNameEmailAndPassword("33333333333", "Miriam Josefina", "miriam.josefina@gmail.com", "someencryptedpassword")
+                .addPhone("33", "444444444444444");
+    }
 }

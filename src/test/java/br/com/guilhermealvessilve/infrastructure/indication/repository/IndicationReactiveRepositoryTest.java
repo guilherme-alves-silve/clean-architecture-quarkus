@@ -10,10 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication;
-import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.createIndication2;
-import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
-import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
+import static br.com.guilhermealvessilve.infrastructure.fixture.IndicationFixture.*;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.*;
 import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.deleteIndications;
 import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.deleteStudents;
 import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.saveIndications;
@@ -38,14 +36,14 @@ class IndicationReactiveRepositoryTest {
 
     @BeforeEach
     public void setUpEach() {
-        saveStudents(studentRepository, createStudent(), createStudent2());
-        saveIndications(repository, createIndication(), createIndication2());
+        saveStudents(studentRepository, createStudent(), createStudent2(), createStudent3());
+        saveIndications(repository, createIndication(), createIndication2(), createIndication3(), createIndication4());
     }
 
     @AfterEach
     public void tearDownEach() {
-        deleteIndications(repository, createIndication(), createIndication2());
-        deleteStudents(studentRepository, createStudent(), createStudent2());
+        deleteIndications(repository, createIndication(), createIndication2(), createIndication3(), createIndication4());
+        deleteStudents(studentRepository, createStudent(), createStudent2(), createStudent3());
     }
 
     @Test
@@ -55,7 +53,7 @@ class IndicationReactiveRepositoryTest {
                 .toCompletableFuture()
                 .join();
 
-        assertEquals(2, indications.size());
+        assertEquals(4, indications.size());
     }
 
     @Test
@@ -72,13 +70,16 @@ class IndicationReactiveRepositoryTest {
         final var saved = optSavedIndication.get();
 
         assertAll(
-                () -> assertEquals("null", null, "Indication.cpf")
+                () -> assertEquals(indication.getIndicator(), saved.getIndicator(), "indicator"),
+                () -> assertEquals(indication.getIndicated(), saved.getIndicated(), "indicated"),
+                () -> assertNotNull(saved.getDate(), "indication.date")
         );
     }
 
     @Test
     void shouldSaveWithSuccess() {
 
+        deleteIndications(repository, createIndication());
         final var result = saveIndications(repository, createIndication());
         assertTrue(result);
     }

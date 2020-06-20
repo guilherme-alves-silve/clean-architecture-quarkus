@@ -3,7 +3,6 @@ package br.com.guilhermealvessilve.infrastructure.student.repository;
 import br.com.guilhermealvessilve.domain.student.entity.Student;
 import br.com.guilhermealvessilve.domain.student.repository.StudentRepository;
 import br.com.guilhermealvessilve.domain.student.vo.CPF;
-import br.com.guilhermealvessilve.infrastructure.util.async.CompletableFutureUtils;
 import br.com.guilhermealvessilve.infrastructure.util.db.TransactionContainer;
 import br.com.guilhermealvessilve.infrastructure.util.db.TransactionManager;
 import io.vertx.mutiny.sqlclient.Pool;

@@ -2,12 +2,14 @@ package br.com.guilhermealvessilve.domain.indication.entity;
 
 import br.com.guilhermealvessilve.domain.student.entity.Student;
 import br.com.guilhermealvessilve.domain.student.vo.CPF;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
+@EqualsAndHashCode(of = {"indicator", "indicated"}, doNotUseGetters = true)
 public class Indication {
 
     private final Student indicator;
