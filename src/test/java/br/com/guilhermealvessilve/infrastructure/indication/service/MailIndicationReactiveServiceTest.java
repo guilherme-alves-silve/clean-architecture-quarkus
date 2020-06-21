@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 class MailIndicationReactiveServiceTest {
 
-    private final MailIndicationReactiveService mailer;
+    private final MailerIndicationReactiveService mailer;
     private final MockMailbox mailbox;
 
     @Inject
-    MailIndicationReactiveServiceTest(final MailIndicationReactiveService mailer, final MockMailbox mailbox) {
+    MailIndicationReactiveServiceTest(final MailerIndicationReactiveService mailer, final MockMailbox mailbox) {
         this.mailer = mailer;
         this.mailbox = mailbox;
     }

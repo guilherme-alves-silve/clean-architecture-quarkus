@@ -33,10 +33,11 @@ class IndicationTest {
     void shouldThrowExceptionWhenCreatingInvalidIndication() {
 
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> new Indication(null, null, null), "indication"),
-                () -> assertThrows(NullPointerException.class, () -> new Indication(null, createStudent(), LocalDateTime.now()), "indication.indicator null"),
-                () -> assertThrows(NullPointerException.class, () -> new Indication(createStudent(), null, LocalDateTime.now()), "indication.indicated null"),
-                () -> assertThrows(NullPointerException.class, () -> new Indication(createStudent(), createStudent2(), null), "indication.date null")
+                () -> assertThrows(NullPointerException.class, () -> Indication.withIndicatorAndIndicated(null, null), "indication withIndicatorAndIndicated"),
+                () -> assertThrows(NullPointerException.class, () -> Indication.withIndicatorIndicatedAndDate(null, null, null), "indication withIndicatorIndicatedAndDate"),
+                () -> assertThrows(NullPointerException.class, () -> Indication.withIndicatorIndicatedAndDate(null, createStudent(), LocalDateTime.now()), "indication.indicator null"),
+                () -> assertThrows(NullPointerException.class, () -> Indication.withIndicatorIndicatedAndDate(createStudent(), null, LocalDateTime.now()), "indication.indicated null"),
+                () -> assertThrows(NullPointerException.class, () -> Indication.withIndicatorIndicatedAndDate(createStudent(), createStudent2(), null), "indication.date null")
         );
     }
 }

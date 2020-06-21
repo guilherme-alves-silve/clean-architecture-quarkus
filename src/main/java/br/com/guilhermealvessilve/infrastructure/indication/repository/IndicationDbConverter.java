@@ -44,7 +44,7 @@ public class IndicationDbConverter implements DbConverter {
                 row.getString("indicated_email")
         );
 
-        return new Indication(
+        return Indication.withIndicatorIndicatedAndDate(
                 indicator,
                 indicated,
                 row.getLocalDateTime("indication_date")

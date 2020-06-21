@@ -4,7 +4,7 @@ import br.com.guilhermealvessilve.domain.indication.entity.Indication;
 
 import java.util.concurrent.CompletionStage;
 
-public interface MailIndicationService {
+public interface MailerIndicationService {
 
     CompletionStage<Void> sendEmail(final Indication indication);
 }

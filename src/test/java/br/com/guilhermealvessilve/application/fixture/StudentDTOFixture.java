@@ -21,4 +21,17 @@ public class StudentDTOFixture {
                 .password("someencryptedpassword")
                 .build();
     }
+
+    public static StudentDTO createStudentDTO2() {
+        return StudentDTO.builder()
+                .cpf("77777777777")
+                .name("Joe Gans")
+                .email("joe.gans@outlook.com")
+                .phones(List.of(
+                        new PhoneDTO("11", "11111111"),
+                        new PhoneDTO("88", "88888888")
+                ))
+                .password("someencryptedpassword2")
+                .build();
+    }
 }

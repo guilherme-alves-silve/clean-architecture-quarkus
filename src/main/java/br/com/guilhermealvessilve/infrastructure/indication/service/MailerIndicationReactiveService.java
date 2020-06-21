@@ -1,6 +1,6 @@
 package br.com.guilhermealvessilve.infrastructure.indication.service;
 
-import br.com.guilhermealvessilve.domain.indication.service.MailIndicationService;
+import br.com.guilhermealvessilve.domain.indication.service.MailerIndicationService;
 import br.com.guilhermealvessilve.domain.indication.entity.Indication;
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.reactive.ReactiveMailer;
@@ -15,14 +15,14 @@ import java.util.concurrent.CompletionStage;
  * https://quarkus.io/guides/mailer
  */
 @ApplicationScoped
-public class MailIndicationReactiveService implements MailIndicationService {
+public class MailerIndicationReactiveService implements MailerIndicationService {
 
-    private static final Logger LOGGER = Logger.getLogger(MailIndicationReactiveService.class);
+    private static final Logger LOGGER = Logger.getLogger(MailerIndicationReactiveService.class);
 
     private final ReactiveMailer mailer;
 
     @Inject
-    public MailIndicationReactiveService(final ReactiveMailer mailer) {
+    public MailerIndicationReactiveService(final ReactiveMailer mailer) {
         this.mailer = mailer;
     }
 

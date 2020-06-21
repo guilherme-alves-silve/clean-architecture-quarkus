@@ -13,7 +13,7 @@ public interface IndicationRepository {
 
     CompletionStage<Optional<Indication>> findByIndicatorCPF(final CPF cpf);
 
-    CompletionStage<Boolean> save(final Indication student);
+    CompletionStage<Boolean> save(final Indication indication);
 
     CompletionStage<Boolean> delete(final Indication indication);
 }

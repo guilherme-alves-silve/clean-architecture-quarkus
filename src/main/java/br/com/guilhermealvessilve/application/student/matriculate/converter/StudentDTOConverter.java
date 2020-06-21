@@ -8,6 +8,14 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class StudentDTOConverter {
 
+    public Student convert(final StudentDTO studentDTO) {
+        return Student.withCPFNameAndEmail(
+                studentDTO.getCpf(),
+                studentDTO.getName(),
+                studentDTO.getEmail()
+        );
+    }
+
     public Student convert(final StudentDTO studentDTO, final String encryptedPassword) {
         final var student = Student.withCPFNameEmailAndPassword(
                 studentDTO.getCpf(),

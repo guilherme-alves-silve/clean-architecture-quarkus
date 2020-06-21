@@ -9,15 +9,14 @@ import java.time.LocalDateTime;
 public class IndicationFixture {
 
     public static Indication createIndication() {
-        return new Indication(
+        return Indication.withIndicatorAndIndicated(
                 StudentFixture.createStudent(),
-                StudentFixture.createStudent2(),
-                LocalDateTime.now()
+                StudentFixture.createStudent2()
         );
     }
 
     public static Indication createIndication2() {
-        return new Indication(
+        return Indication.withIndicatorIndicatedAndDate(
                 StudentFixture.createStudent2(),
                 StudentFixture.createStudent(),
                 LocalDateTime.now().minusDays(5)
@@ -25,7 +24,7 @@ public class IndicationFixture {
     }
 
     public static Indication createIndication3() {
-        return new Indication(
+        return Indication.withIndicatorIndicatedAndDate(
                 StudentFixture.createStudent3(),
                 StudentFixture.createStudent2(),
                 LocalDateTime.now().minusYears(4)
@@ -33,7 +32,7 @@ public class IndicationFixture {
     }
 
     public static Indication createIndication4() {
-        return new Indication(
+        return Indication.withIndicatorIndicatedAndDate(
                 StudentFixture.createStudent2(),
                 StudentFixture.createStudent3(),
                 LocalDateTime.now().minusMonths(1)
