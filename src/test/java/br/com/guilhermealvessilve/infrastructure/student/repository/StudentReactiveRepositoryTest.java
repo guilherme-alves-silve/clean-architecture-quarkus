@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
-import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.*;
 import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.deleteStudents;
 import static br.com.guilhermealvessilve.infrastructure.testutil.db.RepositoryUtil.saveStudents;
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,6 +62,26 @@ class StudentReactiveRepositoryTest {
                 () -> assertEquals(student.getEmail(), saved.getEmail(), "student.email"),
                 () -> assertEquals(student.getName(), saved.getName(), "student.name"),
                 () -> assertEquals(student.getPhones().size(), saved.getPhones().size(), "student.phones")
+        );
+    }
+
+    @Test
+    void shouldFindByCPFStudentWithoutPhone() {
+
+        final var student = createStudentWithoutPhone();
+        final var optSavedStudent = repository.findByCPF(student.getCpf())
+                .toCompletableFuture()
+                .join();
+
+        assertTrue(optSavedStudent.isPresent());
+
+        final var saved = optSavedStudent.get();
+
+        assertAll(
+                () -> assertEquals(student.getCpf(), saved.getCpf(), "student.cpf"),
+                () -> assertEquals(student.getEmail(), saved.getEmail(), "student.email"),
+                () -> assertEquals(student.getName(), saved.getName(), "student.name"),
+                () -> assertTrue(student.getPhones().isEmpty(), "student.phones")
         );
     }
 

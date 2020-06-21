@@ -19,17 +19,17 @@ public class EncrypterServiceMD5 implements EncrypterService {
     }
 
     @Override
-    public CompletionStage<String> encrypt(String value) {
-        return managedExecutor.supplyAsync(() -> encryptBlocking(value));
+    public CompletionStage<String> encrypt(byte[] password) {
+        return managedExecutor.supplyAsync(() -> encryptBlocking(password));
     }
 
     @Override
-    public CompletionStage<Boolean> checkEncrypt(String textValue, String encryptedValue) {
-        return managedExecutor.supplyAsync(() -> checkEncryptBlocking(textValue, encryptedValue));
+    public CompletionStage<Boolean> checkEncrypt(byte[] password, String hashPassword) {
+        return managedExecutor.supplyAsync(() -> checkEncryptBlocking(password, hashPassword));
     }
 
-    private String encryptBlocking(String value) {
-        final var encryptedByte = DigestUtils.md5(value);
+    private String encryptBlocking(byte[] password) {
+        final var encryptedByte = DigestUtils.md5(password);
 
         final var sb = new StringBuilder();
         for (byte b : encryptedByte) {
@@ -39,7 +39,7 @@ public class EncrypterServiceMD5 implements EncrypterService {
         return sb.toString();
     }
 
-    private boolean checkEncryptBlocking(String textValue, String encryptedValue) {
-        return encryptedValue.equalsIgnoreCase(encryptBlocking(textValue));
+    private boolean checkEncryptBlocking(byte[] password, String passwordHash) {
+        return passwordHash.equalsIgnoreCase(encryptBlocking(password));
     }
 }

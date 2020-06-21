@@ -6,8 +6,12 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class StudentFixture {
 
+    public static Student createStudentWithoutPhone() {
+        return Student.withCPFNameEmailAndPassword("11111111111", "Joao Pedro", "joao.pedro@gmail.com", "someencryptedpassword");
+    }
+
     public static Student createStudent() {
-        return Student.withCPFNameEmailAndPassword("11111111111", "Joao Pedro", "joao.pedro@gmail.com", "someencryptedpassword")
+        return createStudentWithoutPhone()
                 .addPhone("11", "11111111")
                 .addPhone("33", "33333333");
     }

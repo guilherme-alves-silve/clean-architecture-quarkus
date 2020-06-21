@@ -29,7 +29,7 @@ public class MatriculateStudentUseCase {
 
     public CompletionStage<Boolean> execute(final StudentDTO studentDTO) {
 
-        return encrypterService.encrypt(studentDTO.getPassword())
+        return encrypterService.encrypt(studentDTO.getPassword().getBytes())
                 .thenApply(encryptedPassword -> converter.convert(studentDTO, encryptedPassword))
                 .thenCompose(repository::save);
     }

@@ -38,7 +38,7 @@ class MatriculateStudentUseCaseTest {
         final var student = StudentFixture.createStudent();
         final var encryptedPassword = "returnedencryptedpassword";
 
-        when(mockEncrypterService.encrypt(eq(student.getPassword())))
+        when(mockEncrypterService.encrypt(eq(student.getPassword().getBytes())))
                 .thenReturn(CompletableFuture.completedFuture(encryptedPassword));
 
         when(mockConverter.convert(any(StudentDTO.class), eq(encryptedPassword)))
@@ -53,7 +53,7 @@ class MatriculateStudentUseCaseTest {
 
         assertTrue(result);
 
-        verify(mockEncrypterService).encrypt(anyString());
+        verify(mockEncrypterService).encrypt(any(byte[].class));
         verify(mockConverter).convert(any(), anyString());
         verify(mockRepository).save(any());
     }

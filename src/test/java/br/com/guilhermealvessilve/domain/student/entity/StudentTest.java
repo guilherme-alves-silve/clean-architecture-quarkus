@@ -7,12 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent;
-import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.createStudent2;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
 
@@ -28,6 +24,21 @@ class StudentTest {
                 () -> assertEquals(student.getEmail(), new Email("joao.pedro@gmail.com"), "student.email"),
                 () -> assertEquals(student.getPhones(), List.of(new Phone("11", "11111111"), new Phone("33", "33333333")), "student.phones"),
                 () -> assertEquals(student.toString(), "{\"cpf\":\"11111111111\",\"name\":\"Joao Pedro\",\"email\":\"joao.pedro@gmail.com\",\"phones\":[\"(11) 11111111\",\"(33) 33333333\"]}")
+        );
+    }
+
+    @Test
+    void shouldCreateValidStudentWithoutPhone() {
+
+        final var student = createStudentWithoutPhone();
+        assertAll(
+                () -> assertNotEquals(student, createStudent2(), "student equals and hashCode different"),
+                () -> assertEquals(student, createStudent(), "student equals and hashCode"),
+                () -> assertEquals(student.getCpf(), new CPF("11111111111"), "student.cpf"),
+                () -> assertEquals(student.getName(), "Joao Pedro", "student.name"),
+                () -> assertEquals(student.getEmail(), new Email("joao.pedro@gmail.com"), "student.email"),
+                () -> assertTrue(student.getPhones().isEmpty(), "student.phones"),
+                () -> assertEquals(student.toString(), "{\"cpf\":\"11111111111\",\"name\":\"Joao Pedro\",\"email\":\"joao.pedro@gmail.com\",\"phones\":[]}")
         );
     }
 

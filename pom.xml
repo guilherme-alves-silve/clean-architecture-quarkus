@@ -96,6 +96,11 @@
       <artifactId>commons-codec</artifactId>
       <version>1.14</version>
     </dependency>
+    <dependency>
+      <groupId>de.mkammerer</groupId>
+      <artifactId>argon2-jvm</artifactId>
+      <version>2.7</version>
+    </dependency>
     <!-- Tescontainer -->
     <dependency>
       <groupId>org.testcontainers</groupId>

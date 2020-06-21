@@ -4,7 +4,7 @@ import java.util.concurrent.CompletionStage;
 
 public interface EncrypterService {
 
-    CompletionStage<String> encrypt(String value);
+    CompletionStage<String> encrypt(byte[] value);
 
-    CompletionStage<Boolean> checkEncrypt(String textValue, String encryptedValue);
+    CompletionStage<Boolean> checkEncrypt(byte[] textValue, String encryptedValue);
 }
