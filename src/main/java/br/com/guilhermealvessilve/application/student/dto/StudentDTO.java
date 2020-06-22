@@ -1,4 +1,4 @@
-package br.com.guilhermealvessilve.application.student.matriculate.dto;
+package br.com.guilhermealvessilve.application.student.dto;
 
 import lombok.*;
 
@@ -9,6 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "password")
 public class StudentDTO {
 
     private String cpf;

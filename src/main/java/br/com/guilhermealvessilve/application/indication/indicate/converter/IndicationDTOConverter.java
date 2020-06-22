@@ -1,7 +1,7 @@
 package br.com.guilhermealvessilve.application.indication.indicate.converter;
 
 import br.com.guilhermealvessilve.application.indication.indicate.dto.IndicationDTO;
-import br.com.guilhermealvessilve.application.student.matriculate.converter.StudentDTOConverter;
+import br.com.guilhermealvessilve.application.student.converter.StudentDTOConverter;
 import br.com.guilhermealvessilve.domain.indication.entity.Indication;
 
 import javax.enterprise.context.ApplicationScoped;

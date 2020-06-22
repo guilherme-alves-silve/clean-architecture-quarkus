@@ -1,7 +1,7 @@
 package br.com.guilhermealvessilve.application.student.matriculate.usecase;
 
-import br.com.guilhermealvessilve.application.student.matriculate.converter.StudentDTOConverter;
-import br.com.guilhermealvessilve.application.student.matriculate.dto.StudentDTO;
+import br.com.guilhermealvessilve.application.student.converter.StudentDTOConverter;
+import br.com.guilhermealvessilve.application.student.dto.StudentDTO;
 import br.com.guilhermealvessilve.domain.student.repository.StudentRepository;
 import br.com.guilhermealvessilve.domain.student.service.EncrypterService;
 

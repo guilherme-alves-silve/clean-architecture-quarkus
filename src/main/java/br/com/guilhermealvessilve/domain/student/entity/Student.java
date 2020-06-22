@@ -1,5 +1,6 @@
 package br.com.guilhermealvessilve.domain.student.entity;
 
+import br.com.guilhermealvessilve.domain.student.exception.StudentMaxOfThreePhonesException;
 import br.com.guilhermealvessilve.domain.student.vo.CPF;
 import br.com.guilhermealvessilve.domain.student.vo.Email;
 import br.com.guilhermealvessilve.domain.student.vo.Phone;
@@ -37,6 +38,12 @@ public class Student {
     }
 
     public Student addPhone(final String code, final String number) {
+
+        //Class invariant
+        if (phones.size() == StudentMaxOfThreePhonesException.MAX_NUMBER_OF_PHONES) {
+            throw new StudentMaxOfThreePhonesException();
+        }
+
         phones.add(new Phone(code, number));
         return this;
     }

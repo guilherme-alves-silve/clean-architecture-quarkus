@@ -1,6 +1,6 @@
 package br.com.guilhermealvessilve.application.indication.indicate.dto;
 
-import br.com.guilhermealvessilve.application.student.matriculate.dto.StudentDTO;
+import br.com.guilhermealvessilve.application.student.dto.StudentDTO;
 import lombok.*;
 
 @Getter

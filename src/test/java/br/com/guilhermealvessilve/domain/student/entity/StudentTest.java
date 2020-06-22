@@ -1,5 +1,6 @@
 package br.com.guilhermealvessilve.domain.student.entity;
 
+import br.com.guilhermealvessilve.domain.student.exception.StudentMaxOfThreePhonesException;
 import br.com.guilhermealvessilve.domain.student.vo.CPF;
 import br.com.guilhermealvessilve.domain.student.vo.Email;
 import br.com.guilhermealvessilve.domain.student.vo.Phone;
@@ -52,5 +53,22 @@ class StudentTest {
                 () -> assertThrows(NullPointerException.class, () -> Student.withCPFNameEmailAndPassword("11111111111", "José", null, "someencryptedpassword"), "student.email null"),
                 () -> assertThrows(NullPointerException.class, () -> Student.withCPFNameEmailAndPassword("11111111111", "José", "joao.pedro.marcos@gmail.com", null), "student.password null")
         );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenAddingMoreThanThreePhoneNumbers() {
+
+        assertThrows(StudentMaxOfThreePhonesException.class, () -> {
+            Student.withCPFNameEmailAndPassword(
+                    "11111111111",
+                    "José",
+                    "joao.pedro.marcos@gmail.com",
+                    "someencryptedpassword"
+            )
+            .addPhone("11", "11111111")
+            .addPhone("22", "22222222")
+            .addPhone("33", "33333333")
+            .addPhone("44", "44444444");
+        }, "student.phones");
     }
 }

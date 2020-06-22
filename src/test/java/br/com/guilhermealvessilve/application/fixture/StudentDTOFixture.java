@@ -1,7 +1,7 @@
 package br.com.guilhermealvessilve.application.fixture;
 
-import br.com.guilhermealvessilve.application.student.matriculate.dto.PhoneDTO;
-import br.com.guilhermealvessilve.application.student.matriculate.dto.StudentDTO;
+import br.com.guilhermealvessilve.application.student.dto.PhoneDTO;
+import br.com.guilhermealvessilve.application.student.dto.StudentDTO;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -32,6 +32,19 @@ public class StudentDTOFixture {
                         new PhoneDTO("88", "88888888")
                 ))
                 .password("someencryptedpassword2")
+                .build();
+    }
+
+    public static StudentDTO createStudentDTO3() {
+        return StudentDTO.builder()
+                .cpf("11111111111")
+                .name("Joao Pedro")
+                .email("joao.pedro@gmail.com")
+                .phones(List.of(
+                        new PhoneDTO("11", "11111111"),
+                        new PhoneDTO("33", "33333333")
+                ))
+                .password("someencryptedpassword3")
                 .build();
     }
 }
