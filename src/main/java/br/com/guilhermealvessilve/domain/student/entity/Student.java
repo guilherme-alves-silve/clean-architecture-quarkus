@@ -6,7 +6,6 @@ import br.com.guilhermealvessilve.domain.student.vo.Email;
 import br.com.guilhermealvessilve.domain.student.vo.Phone;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -24,11 +23,11 @@ public class Student {
     private final List<Phone> phones;
     private final String password;
 
-    protected Student(final CPF cpf, final String name, final Email email, final String password) {
+    private Student(final CPF cpf, final String name, final Email email, final String password) {
         this.cpf = Objects.requireNonNull(cpf, "student.cpf cannot be null");
         this.name = Objects.requireNonNull(name, "student.name cannot be null");
         this.email = Objects.requireNonNull(email, "student.email cannot be null");
-        this.password = Objects.requireNonNull(password, "student.password cannot be null");
+        this.password = password;
         this.phones = new ArrayList<>();
     }
 
@@ -49,11 +48,11 @@ public class Student {
     }
 
     public static Student withCPFNameAndEmail(final String cpf, final String name, final String email) {
-        return new Student(new CPF(cpf), name, new Email(email), StringUtils.EMPTY);
+        return new Student(new CPF(cpf), name, new Email(email), null);
     }
 
     public static Student withCPFNameEmailAndPassword(final String cpf, final String name, final String email, final String password) {
-        return new Student(new CPF(cpf), name, new Email(email), password);
+        return new Student(new CPF(cpf), name, new Email(email), Objects.requireNonNull(password, "student.password cannot be null"));
     }
 
     @Override

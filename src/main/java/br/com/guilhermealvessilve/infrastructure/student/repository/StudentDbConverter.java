@@ -40,11 +40,10 @@ public class StudentDbConverter implements DbConverter {
 
     private Student rowToStudent(Row row) {
 
-        return Student.withCPFNameEmailAndPassword(
+        return Student.withCPFNameAndEmail(
                 row.getString("cpf"),
                 row.getString("name"),
-                row.getString("email"),
-                row.getString("password")
+                row.getString("email")
         );
     }
 

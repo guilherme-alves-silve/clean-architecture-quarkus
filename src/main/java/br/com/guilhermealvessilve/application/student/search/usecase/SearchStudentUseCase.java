@@ -1,7 +1,6 @@
 package br.com.guilhermealvessilve.application.student.search.usecase;
 
-import br.com.guilhermealvessilve.application.student.converter.StudentDTOConverter;
-import br.com.guilhermealvessilve.application.student.dto.StudentDTO;
+import br.com.guilhermealvessilve.domain.student.entity.Student;
 import br.com.guilhermealvessilve.domain.student.exception.StudentNotFoundException;
 import br.com.guilhermealvessilve.domain.student.repository.StudentRepository;
 import br.com.guilhermealvessilve.domain.student.vo.CPF;
@@ -15,20 +14,17 @@ import java.util.concurrent.CompletionStage;
 public class SearchStudentUseCase {
 
     private final StudentRepository repository;
-    private final StudentDTOConverter converter;
 
     @Inject
-    public SearchStudentUseCase(final StudentRepository repository, final StudentDTOConverter converter) {
+    public SearchStudentUseCase(final StudentRepository repository) {
         this.repository = repository;
-        this.converter = converter;
     }
 
-    public CompletionStage<StudentDTO> execute(final CPF cpf) {
+    public CompletionStage<Student> execute(final CPF cpf) {
 
         return repository.findByCPF(cpf)
                 .thenCompose(optStudent -> optStudent.map(CompletableFuture::completedStage)
-                            .orElseGet(() -> CompletableFuture.failedStage(new StudentNotFoundException(cpf))))
-                .thenApply(converter::convert);
+                            .orElseGet(() -> CompletableFuture.failedStage(new StudentNotFoundException(cpf))));
     }
 }
 

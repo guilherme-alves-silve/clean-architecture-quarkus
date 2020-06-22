@@ -59,8 +59,9 @@ class StudentReactiveRepositoryTest {
 
         assertAll(
                 () -> assertEquals(student.getCpf(), saved.getCpf(), "student.cpf"),
-                () -> assertEquals(student.getEmail(), saved.getEmail(), "student.email"),
                 () -> assertEquals(student.getName(), saved.getName(), "student.name"),
+                () -> assertEquals(student.getEmail(), saved.getEmail(), "student.email"),
+                () -> assertNull(saved.getPassword(),"student.password must be null"),
                 () -> assertEquals(student.getPhones().size(), saved.getPhones().size(), "student.phones")
         );
     }
