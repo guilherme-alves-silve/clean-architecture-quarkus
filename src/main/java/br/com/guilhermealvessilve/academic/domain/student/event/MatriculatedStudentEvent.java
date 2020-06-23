@@ -1,6 +1,6 @@
 package br.com.guilhermealvessilve.academic.domain.student.event;
 
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

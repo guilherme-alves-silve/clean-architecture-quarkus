@@ -2,7 +2,7 @@ package br.com.guilhermealvessilve.academic.application.student.search.usecase;
 
 import br.com.guilhermealvessilve.academic.domain.student.exception.StudentNotFoundException;
 import br.com.guilhermealvessilve.academic.domain.student.repository.StudentRepository;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import org.junit.jupiter.api.Test;

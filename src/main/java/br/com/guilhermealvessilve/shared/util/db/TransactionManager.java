@@ -1,4 +1,4 @@
-package br.com.guilhermealvessilve.academic.infrastructure.util.db;
+package br.com.guilhermealvessilve.shared.util.db;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;

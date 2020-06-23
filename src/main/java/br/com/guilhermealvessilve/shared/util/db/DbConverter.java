@@ -1,4 +1,4 @@
-package br.com.guilhermealvessilve.academic.infrastructure.util.db;
+package br.com.guilhermealvessilve.shared.util.db;
 
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.RowSet;

@@ -1,4 +1,4 @@
-package br.com.guilhermealvessilve.academic.infrastructure.util;
+package br.com.guilhermealvessilve.shared.util;
 
 import io.quarkus.runtime.configuration.ProfileManager;
 import lombok.experimental.UtilityClass;

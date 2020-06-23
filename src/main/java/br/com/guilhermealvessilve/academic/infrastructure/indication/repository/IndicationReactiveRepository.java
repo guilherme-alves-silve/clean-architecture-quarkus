@@ -2,7 +2,7 @@ package br.com.guilhermealvessilve.academic.infrastructure.indication.repository
 
 import br.com.guilhermealvessilve.academic.domain.indication.entity.Indication;
 import br.com.guilhermealvessilve.academic.domain.indication.repository.IndicationRepository;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import io.vertx.mutiny.sqlclient.Pool;
 import io.vertx.mutiny.sqlclient.Tuple;
 

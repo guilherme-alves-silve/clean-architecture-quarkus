@@ -4,7 +4,7 @@ import br.com.guilhermealvessilve.academic.application.indication.indicate.conve
 import br.com.guilhermealvessilve.academic.application.indication.indicate.dto.IndicationDTO;
 import br.com.guilhermealvessilve.academic.domain.indication.repository.IndicationRepository;
 import br.com.guilhermealvessilve.academic.domain.indication.service.MailerIndicationService;
-import br.com.guilhermealvessilve.academic.infrastructure.util.async.CompletableFutureUtils;
+import br.com.guilhermealvessilve.shared.util.async.CompletableFutureUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

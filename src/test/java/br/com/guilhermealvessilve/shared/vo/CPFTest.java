@@ -1,6 +1,5 @@
-package br.com.guilhermealvessilve.academic.domain.student.vo;
+package br.com.guilhermealvessilve.shared.vo;
 
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

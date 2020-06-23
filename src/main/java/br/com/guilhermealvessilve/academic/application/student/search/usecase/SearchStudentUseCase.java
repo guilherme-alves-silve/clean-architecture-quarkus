@@ -3,7 +3,7 @@ package br.com.guilhermealvessilve.academic.application.student.search.usecase;
 import br.com.guilhermealvessilve.academic.domain.student.entity.Student;
 import br.com.guilhermealvessilve.academic.domain.student.exception.StudentNotFoundException;
 import br.com.guilhermealvessilve.academic.domain.student.repository.StudentRepository;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

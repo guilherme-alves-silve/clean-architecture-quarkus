@@ -1,6 +1,6 @@
 package br.com.guilhermealvessilve.academic.infrastructure.db;
 
-import br.com.guilhermealvessilve.academic.infrastructure.util.Profile;
+import br.com.guilhermealvessilve.shared.util.Profile;
 import io.quarkus.runtime.StartupEvent;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.flywaydb.core.Flyway;

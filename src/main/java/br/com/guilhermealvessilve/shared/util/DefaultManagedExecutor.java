@@ -1,4 +1,4 @@
-package br.com.guilhermealvessilve.academic.infrastructure.util;
+package br.com.guilhermealvessilve.shared.util;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.context.ManagedExecutor;

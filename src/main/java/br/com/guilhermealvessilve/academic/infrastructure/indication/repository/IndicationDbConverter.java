@@ -2,8 +2,8 @@ package br.com.guilhermealvessilve.academic.infrastructure.indication.repository
 
 import br.com.guilhermealvessilve.academic.domain.indication.entity.Indication;
 import br.com.guilhermealvessilve.academic.domain.student.entity.Student;
-import br.com.guilhermealvessilve.academic.infrastructure.util.db.CollectionUtils;
-import br.com.guilhermealvessilve.academic.infrastructure.util.db.DbConverter;
+import br.com.guilhermealvessilve.shared.util.db.CollectionUtils;
+import br.com.guilhermealvessilve.shared.util.db.DbConverter;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.RowSet;
 

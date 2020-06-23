@@ -1,7 +1,7 @@
 package br.com.guilhermealvessilve.academic.infrastructure.student.subscriber.eventbus.codec;
 
 import br.com.guilhermealvessilve.academic.domain.student.event.MatriculatedStudentEvent;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;
 import io.vertx.core.json.JsonObject;

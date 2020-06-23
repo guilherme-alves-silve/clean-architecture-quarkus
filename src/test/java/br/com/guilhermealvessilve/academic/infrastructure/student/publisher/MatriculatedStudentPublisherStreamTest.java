@@ -1,8 +1,7 @@
 package br.com.guilhermealvessilve.academic.infrastructure.student.publisher;
 
-import br.com.guilhermealvessilve.academic.infrastructure.student.publisher.MatriculatedStudentPublisherStream;
 import br.com.guilhermealvessilve.academic.domain.student.event.MatriculatedStudentEvent;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import br.com.guilhermealvessilve.academic.infrastructure.student.subscriber.eventbus.MatriculatedStudentEventBusSubscriber;
 import io.quarkus.test.junit.QuarkusTest;
 import io.vertx.mutiny.core.eventbus.EventBus;

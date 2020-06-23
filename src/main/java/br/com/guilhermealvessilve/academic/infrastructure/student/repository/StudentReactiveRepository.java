@@ -1,10 +1,10 @@
 package br.com.guilhermealvessilve.academic.infrastructure.student.repository;
 
-import br.com.guilhermealvessilve.academic.infrastructure.util.db.TransactionContainer;
-import br.com.guilhermealvessilve.academic.infrastructure.util.db.TransactionManager;
+import br.com.guilhermealvessilve.shared.util.db.TransactionContainer;
+import br.com.guilhermealvessilve.shared.util.db.TransactionManager;
 import br.com.guilhermealvessilve.academic.domain.student.entity.Student;
 import br.com.guilhermealvessilve.academic.domain.student.repository.StudentRepository;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import io.vertx.mutiny.sqlclient.Pool;
 import io.vertx.mutiny.sqlclient.Tuple;
 import org.jboss.logging.Logger;
@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
-import static br.com.guilhermealvessilve.academic.infrastructure.util.async.CompletableFutureUtils.successCompletedStage;
+import static br.com.guilhermealvessilve.shared.util.async.CompletableFutureUtils.successCompletedStage;
 
 @ApplicationScoped
 public class StudentReactiveRepository implements StudentRepository, TransactionManager {

@@ -1,8 +1,7 @@
-package br.com.guilhermealvessilve.academic.infrastructure.util.async;
+package br.com.guilhermealvessilve.shared.util.async;
 
 import lombok.experimental.UtilityClass;
 
-import java.awt.print.Book;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 

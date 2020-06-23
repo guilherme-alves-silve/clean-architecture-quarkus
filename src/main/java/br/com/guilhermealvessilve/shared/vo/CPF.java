@@ -1,4 +1,4 @@
-package br.com.guilhermealvessilve.academic.domain.student.vo;
+package br.com.guilhermealvessilve.shared.vo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

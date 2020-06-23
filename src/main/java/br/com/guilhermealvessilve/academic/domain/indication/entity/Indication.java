@@ -1,7 +1,7 @@
 package br.com.guilhermealvessilve.academic.domain.indication.entity;
 
 import br.com.guilhermealvessilve.academic.domain.student.entity.Student;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

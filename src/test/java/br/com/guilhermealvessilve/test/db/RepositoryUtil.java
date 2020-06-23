@@ -4,6 +4,8 @@ import br.com.guilhermealvessilve.academic.domain.indication.entity.Indication;
 import br.com.guilhermealvessilve.academic.domain.indication.repository.IndicationRepository;
 import br.com.guilhermealvessilve.academic.domain.student.entity.Student;
 import br.com.guilhermealvessilve.academic.domain.student.repository.StudentRepository;
+import br.com.guilhermealvessilve.gamification.domain.seal.entity.Seal;
+import br.com.guilhermealvessilve.gamification.infrastructure.seal.repository.SealReactiveRepository;
 import lombok.experimental.UtilityClass;
 import org.jboss.logging.Logger;
 
@@ -48,6 +50,24 @@ public class RepositoryUtil {
                     .allMatch(indication -> repository.delete(indication)
                             .toCompletableFuture()
                             .join())
+        );
+    }
+
+    public static boolean saveSeals(SealReactiveRepository repository, Seal... seals) {
+        return tryExecution(() ->
+            Stream.of(seals)
+                    .allMatch(seal -> repository.save(seal)
+                            .toCompletableFuture()
+                            .join())
+        );
+    }
+
+    public static boolean deleteSeals(SealReactiveRepository repository, Seal... seals) {
+        return tryExecution(() ->
+                Stream.of(seals)
+                        .allMatch(seal -> repository.delete(seal)
+                                .toCompletableFuture()
+                                .join())
         );
     }
 

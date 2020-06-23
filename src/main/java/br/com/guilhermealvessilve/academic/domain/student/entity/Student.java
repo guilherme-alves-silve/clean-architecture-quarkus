@@ -1,7 +1,7 @@
 package br.com.guilhermealvessilve.academic.domain.student.entity;
 
 import br.com.guilhermealvessilve.academic.domain.student.exception.StudentMaxOfThreePhonesException;
-import br.com.guilhermealvessilve.academic.domain.student.vo.CPF;
+import br.com.guilhermealvessilve.shared.vo.CPF;
 import br.com.guilhermealvessilve.academic.domain.student.vo.Email;
 import br.com.guilhermealvessilve.academic.domain.student.vo.Phone;
 import lombok.EqualsAndHashCode;

@@ -2,8 +2,8 @@ package br.com.guilhermealvessilve.academic.infrastructure.student.repository;
 
 import br.com.guilhermealvessilve.academic.domain.student.entity.Student;
 import br.com.guilhermealvessilve.academic.domain.student.vo.Phone;
-import br.com.guilhermealvessilve.academic.infrastructure.util.db.CollectionUtils;
-import br.com.guilhermealvessilve.academic.infrastructure.util.db.DbConverter;
+import br.com.guilhermealvessilve.shared.util.db.CollectionUtils;
+import br.com.guilhermealvessilve.shared.util.db.DbConverter;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.RowSet;
 

@@ -1,6 +1,6 @@
 package br.com.guilhermealvessilve.academic.infrastructure.student.service;
 
-import br.com.guilhermealvessilve.academic.infrastructure.util.PriorityUtils;
+import br.com.guilhermealvessilve.shared.util.PriorityUtils;
 import br.com.guilhermealvessilve.academic.domain.student.service.EncrypterService;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
