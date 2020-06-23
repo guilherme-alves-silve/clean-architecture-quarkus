@@ -3,7 +3,9 @@ package br.com.guilhermealvessilve.application.student.matriculate.usecase;
 import br.com.guilhermealvessilve.application.fixture.StudentDTOFixture;
 import br.com.guilhermealvessilve.application.student.converter.StudentDTOConverter;
 import br.com.guilhermealvessilve.application.student.dto.StudentDTO;
+import br.com.guilhermealvessilve.domain.student.event.MatriculatedStudentEvent;
 import br.com.guilhermealvessilve.domain.student.exception.StudentMaxOfThreePhonesException;
+import br.com.guilhermealvessilve.domain.student.publisher.MatriculatedStudentPublisher;
 import br.com.guilhermealvessilve.domain.student.repository.StudentRepository;
 import br.com.guilhermealvessilve.domain.student.service.EncrypterService;
 import br.com.guilhermealvessilve.infrastructure.fixture.StudentFixture;
@@ -34,6 +36,9 @@ class MatriculateStudentUseCaseTest {
     @InjectMock
     EncrypterService mockEncrypterService;
 
+    @InjectMock
+    MatriculatedStudentPublisher mockPublisher;
+
     @Test
     void shouldMatriculateStudent() {
 
@@ -58,6 +63,7 @@ class MatriculateStudentUseCaseTest {
         verify(mockEncrypterService).encrypt(any(byte[].class));
         verify(mockConverter).convert(any(), anyString());
         verify(mockRepository).save(any());
+        verify(mockPublisher).submit(any(MatriculatedStudentEvent.class));
     }
 
     @Test
@@ -81,7 +87,8 @@ class MatriculateStudentUseCaseTest {
                 }, "students.phones StudentMaxOfThreePhonesException"),
                 () -> verify(mockEncrypterService).encrypt(any(byte[].class)),
                 () -> verify(mockConverter).convert(any(), anyString()),
-                () -> verify(mockRepository, never()).save(any())
+                () -> verify(mockRepository, never()).save(any()),
+                () -> verify(mockPublisher, never()).submit(any())
         );
     }
 }
